@@ -1,0 +1,55 @@
+body {
+    text-align: center;
+    background-color: rgb(45, 39, 83);
+    color: rgb(239, 228, 245);
+}
+
+
+.button {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    border: 3px solid rgb(198, 184, 206);
+    border-style: outset;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 80px;
+    font-family: copperplate;
+    margin-top: 30px;
+
+}
+
+.row1 {
+   height: 60px;
+}
+
+.level {
+    display: inline-block;
+    height: 30px;
+    width: 110px;
+    border: 3px solid rgb(198, 184, 206);
+    border-style: outset;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+#reset {
+    display: inline-block;
+    height: 30px;
+    width: 110px;
+    border: 3px solid rgb(198, 184, 206);
+    border-style: outset;
+    border-radius: 10px;
+    margin: 10px;
+    padding-top: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
