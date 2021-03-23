@@ -274,18 +274,16 @@ function word(level) {
 let realWord = "";   
 const mainWord = document.getElementById('mot');
 let letters = document.getElementsByClassName("button");
-let lifeDisplay = document.getElementById("life-number");
-let test = document.getElementById("test");
+let draw = document.getElementById("image");
 let info = document.getElementById("info");
-let tryDisplay = document.getElementById('try');
 let resetDisplay = document.getElementById('reset');
-let life = 8;
+let count = 1;
 let firstMain = "";
 
 
 resetDisplay.style.display = "none";
-tryDisplay.style.visibility = "hidden";
-lifeDisplay.style.visibility = "hidden";
+draw.style.display = "none";
+document.getElementById("letters").style.display = "none";
 info.innerText = "Choose a word length";
 mainWord.innerText = "";
 
@@ -299,12 +297,13 @@ document.getElementById('easy').onclick = () => {
     document.getElementById('hard').style.visibility = 'hidden';
     document.getElementById('easy').style.visibility = 'hidden';
     document.getElementById('medium').style.visibility = 'hidden';
-    lifeDisplay.innerHTML = life.toString();
+    draw.style.display = "inline-block";
+    draw.src = "assets/Hangman-0.png";
     mainWord.style.visibility = "visible";
-    info.style.visibility = 'hidden';
-    tryDisplay.style.visibility = "visible";
-    lifeDisplay.style.visibility = "visible";
+    info.style.display = 'none';
+    
     resetDisplay.style.display = "inline-block";
+    document.getElementById("letters").style.display = "block";
 }
 document.getElementById('medium').onclick = () => {
     realWord = word('medium');
@@ -314,12 +313,12 @@ document.getElementById('medium').onclick = () => {
     document.getElementById('hard').style.visibility = 'hidden';
     document.getElementById('easy').style.visibility = 'hidden';
     document.getElementById('medium').style.visibility = 'hidden';
-    lifeDisplay.innerHTML = life.toString();
+    draw.style.display = "inline-block";
     mainWord.style.visibility = "visible";
-    info.style.visibility = 'hidden';
-    tryDisplay.style.visibility = "visible";
-    lifeDisplay.style.visibility = "visible";
+    info.style.display = 'none';
+    draw.src = "assets/Hangman-0.png";
     resetDisplay.style.display = "inline-block";
+    document.getElementById("letters").style.display = "block";
 }
 
 document.getElementById('hard').onclick = () => {
@@ -331,11 +330,11 @@ document.getElementById('hard').onclick = () => {
     document.getElementById('easy').style.visibility = 'hidden';
     document.getElementById('medium').style.visibility = 'hidden';
     mainWord.style.visibility = "visible";
-    lifeDisplay.innerHTML = life.toString();
-    info.style.visibility = 'hidden';
-    tryDisplay.style.visibility = "visible";
-    lifeDisplay.style.visibility = "visible";
+    draw.style.display = "inline-block";
+    info.style.display = 'none';
+    draw.src = "assets/Hangman-0.png";
     resetDisplay.style.display = "inline-block";
+    document.getElementById("letters").style.display = "block";
 }
 
 
@@ -352,27 +351,37 @@ function checkLetter (e) {
 
 function checkWrong (e) {
     if (!realWord.includes(e.target.innerHTML)) {
-        life--;
-        lifeDisplay.innerHTML = life.toString();
+        count++;
+        if (count === 2) {
+            draw.src = "assets/Hangman-1.png";
+        } if (count === 3) {
+            draw.src = "assets/Hangman-2.png";
+        } if (count === 4) {
+            draw.src = "assets/Hangman-3.png";
+        } if (count === 5) {
+            draw.src = "assets/Hangman-4.png";
+        } if (count === 6) {
+            draw.src = "assets/Hangman-5.png";
+        } if (count === 7) {
+            draw.src = "assets/Hangman-6.png";
+        }
     };
 };
 
 function endGame () {
-    if (life === 0) {
-        document.getElementById('hard').style.visibility = 'visible';
-        document.getElementById('easy').style.visibility = 'visible';
-        document.getElementById('medium').style.visibility = 'visible';
+    if (count === 7) {
+        
         for (x = 0; x < letters.length; x++) {
             letters[x].style = "visible";
         }
-        life = 8;
-        lifeDisplay.innerHTML = life.toString();
+        count = 1;
+        
         mainWord.style.visibility = "hidden";
-        info.style.visibility = 'visible';
-        info.innerText = 'YOU LOOSE :( Choose a word length to try again!';
-        tryDisplay.style.visibility = "hidden";
-        lifeDisplay.style.visibility = "hidden";
-        resetDisplay.style.display = "none";
+        info.style.display = 'block';
+        info.innerText = 'YOU LOOSE :(';
+        
+        resetDisplay.innerText = "REPLAY";
+        document.getElementById("letters").style.display = "none";
 }
 };
 
@@ -384,13 +393,12 @@ function win () {
         for (x = 0; x < letters.length; x++) {
             letters[x].style = "visible";
         }
-        life = 8;
-        lifeDisplay.innerHTML = life.toString();
-        info.style.visibility = 'visible';
+        count = 1;
+        info.style.display = 'block';
         info.innerText = 'YOU WON! Choose a word length to play again.';
-        tryDisplay.style.visibility = "hidden";
-        lifeDisplay.style.visibility = "hidden";
+        draw.style.display = "none";
         resetDisplay.style.display = "none";
+        document.getElementById("letters").style.display = "none";
     }
 }
 
@@ -408,14 +416,13 @@ function reset () {
         for (x = 0; x < letters.length; x++) {
             letters[x].style = "visible";
         }
-        life = 8;
-        lifeDisplay.innerHTML = life.toString();
-        info.style.visibility = 'visible';
+        count = 1;
+        info.style.display = 'block';
         info.innerText = "Choose a word length";
         mainWord.innerText = "";
-        tryDisplay.style.visibility = "hidden";
-        lifeDisplay.style.visibility = "hidden";
+        draw.style.display = "none";
         resetDisplay.style.display = "none";
+        document.getElementById("letters").style.display = "none";
         
 }
 

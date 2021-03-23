@@ -22,6 +22,7 @@ h1 {
     font-size: 80px;
     font-family: copperplate;
     margin-top: 30px;
+    margin-bottom: 15px;
 
 }
 
@@ -52,4 +53,16 @@ h1 {
     padding-top: 12px;
     font-weight: bold;
     cursor: pointer;
+    position: relative;
+    bottom: 60px;
+}
+
+#letters {
+    position: relative;
+    bottom: 75px;
+}
+
+#image {
+    position: relative;
+    right: 30px;
 }
