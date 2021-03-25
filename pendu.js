@@ -271,8 +271,8 @@ function word(level) {
     }
 }; 
 
-let realWord = "";   
-const mainWord = document.getElementById('mot');
+let realWord = "";  
+let mainWord = document.getElementById('mot');
 let letters = document.getElementsByClassName("button");
 let draw = document.getElementById("image");
 let info = document.getElementById("info");
@@ -281,15 +281,15 @@ let count = 1;
 let firstMain = "";
 
 
-resetDisplay.style.display = "none";
+resetDisplay.style.visibility = "hidden";
+
 draw.style.display = "none";
 document.getElementById("letters").style.display = "none";
 info.innerText = "Choose a word length";
 mainWord.innerText = "";
+mainWord.style.display = "none";
 
-
-
-document.getElementById('easy').onclick = () => {
+function setShort () {
     realWord = word('easy');
     firstMain = '_'.repeat(realWord.length);
     mainWord.innerText = '_ '.repeat(realWord.length);
@@ -301,11 +301,13 @@ document.getElementById('easy').onclick = () => {
     draw.src = "assets/Hangman-0.png";
     mainWord.style.visibility = "visible";
     info.style.display = 'none';
-    
-    resetDisplay.style.display = "inline-block";
+    mainWord.style.display = "block";
+    resetDisplay.style.visibility = "visible";
+    resetDisplay.innerHTML = 'RESET'
     document.getElementById("letters").style.display = "block";
 }
-document.getElementById('medium').onclick = () => {
+
+function setMedium () {
     realWord = word('medium');
     firstMain = '_'.repeat(realWord.length);
     mainWord.innerText = '_ '.repeat(realWord.length);
@@ -317,11 +319,13 @@ document.getElementById('medium').onclick = () => {
     mainWord.style.visibility = "visible";
     info.style.display = 'none';
     draw.src = "assets/Hangman-0.png";
-    resetDisplay.style.display = "inline-block";
+    resetDisplay.style.visibility = "visible";
+    resetDisplay.innerHTML = 'RESET'
     document.getElementById("letters").style.display = "block";
+    mainWord.style.display = "block";
 }
 
-document.getElementById('hard').onclick = () => {
+function setLong () {
     realWord = word('hard');
     firstMain = '_'.repeat(realWord.length);
     mainWord.innerText = '_ '.repeat(realWord.length);
@@ -333,8 +337,45 @@ document.getElementById('hard').onclick = () => {
     draw.style.display = "inline-block";
     info.style.display = 'none';
     draw.src = "assets/Hangman-0.png";
-    resetDisplay.style.display = "inline-block";
+    resetDisplay.style.visibility = "visible";
+    resetDisplay.innerHTML = 'RESET'
     document.getElementById("letters").style.display = "block";
+    mainWord.style.display = "block";
+    
+}
+
+
+
+function animReset (e) {
+    e.target.style.transform = 'scale(1.15)';
+}
+
+function resetReset () {
+    resetDisplay.style.transform = 'scale(1)';
+    document.getElementById('easy').style.transform = 'scale(1)';
+    document.getElementById('medium').style.transform = 'scale(1)';
+    document.getElementById('hard').style.transform = 'scale(1)';
+}
+
+
+
+
+document.getElementById('easy').onclick = (e) => {
+    animReset(e);
+    setTimeout(setShort, 200);
+    setTimeout(resetReset, 200);
+}
+
+document.getElementById('medium').onclick = (e) => {
+    animReset(e);
+    setTimeout(setMedium, 200);
+    setTimeout(resetReset, 200);
+}
+
+document.getElementById('hard').onclick = (e) => {
+    animReset(e);
+    setTimeout(setLong, 200);
+    setTimeout(resetReset, 200);
 }
 
 
@@ -345,11 +386,16 @@ function checkLetter (e) {
             wordArray[i] = e.target.innerText;
         } 
       }; mainWord.innerText = wordArray.join('  ');
-      e.target.style.visibility = 'hidden';
+      
+      
+      
       
 };
 
 function checkWrong (e) {
+    if (realWord.includes(e.target.innerHTML)) {
+        e.target.style.animation = 'rightFlash 0.2s forwards';
+    }
     if (!realWord.includes(e.target.innerHTML)) {
         count++;
         if (count === 2) {
@@ -365,7 +411,9 @@ function checkWrong (e) {
         } if (count === 7) {
             draw.src = "assets/Hangman-6.png";
         }
+        e.target.style.animation = 'wrongFlash 0.15s forwards';
     };
+
 };
 
 function endGame () {
@@ -375,13 +423,11 @@ function endGame () {
             letters[x].style = "visible";
         }
         count = 1;
-        
-        mainWord.style.visibility = "hidden";
         info.style.display = 'block';
         info.innerText = 'YOU LOOSE :(';
-        
         resetDisplay.innerText = "REPLAY";
         document.getElementById("letters").style.display = "none";
+        mainWord.innerText = realWord;
 }
 };
 
@@ -397,8 +443,9 @@ function win () {
         info.style.display = 'block';
         info.innerText = 'YOU WON! Choose a word length to play again.';
         draw.style.display = "none";
-        resetDisplay.style.display = "none";
+        resetDisplay.style.visibility = "hidden";
         document.getElementById("letters").style.display = "none";
+        
     }
 }
 
@@ -411,26 +458,34 @@ function handlers (e) {
 
 function reset () {
     document.getElementById('hard').style.visibility = 'visible';
-        document.getElementById('easy').style.visibility = 'visible';
-        document.getElementById('medium').style.visibility = 'visible';
-        for (x = 0; x < letters.length; x++) {
-            letters[x].style = "visible";
-        }
-        count = 1;
-        info.style.display = 'block';
-        info.innerText = "Choose a word length";
-        mainWord.innerText = "";
-        draw.style.display = "none";
-        resetDisplay.style.display = "none";
-        document.getElementById("letters").style.display = "none";
-        
+    document.getElementById('easy').style.visibility = 'visible';
+    document.getElementById('medium').style.visibility = 'visible';
+    for (x = 0; x < letters.length; x++) {
+        letters[x].style = "hidden";
+    }
+    count = 1;
+    info.style.display = 'block';
+    info.innerText = "Choose a word length";
+    mainWord.innerText = "";
+    draw.style.display = "none";
+    resetDisplay.style.visibility = "hidden";
+    document.getElementById("letters").style.display = "none";
+    mainWord.style.display = "none";
+    setTimeout(restart, 200);    
 }
+
 
 for (x = 0; x < letters.length; x++) {
     letters[x].onclick = handlers;
 }
 
-resetDisplay.onclick = reset;
+resetDisplay.onclick = (e) => {
+    animReset(e);
+    setTimeout(reset, 200);
+    setTimeout(resetReset, 200);
+}
+
+
 
 
 

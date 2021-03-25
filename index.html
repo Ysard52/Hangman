@@ -3,15 +3,17 @@
 
   <head>
     <meta charset="utf-8">
-  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hangman</title>
+    <link rel='stylesheet' media='screen and (min-width: 320px) and (max-width: 450px)' href='mobile.css' />
   
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" media='screen and (min-width: 450px)' href="style.css">
 
   </head>
   <body>
-      <h1>The Hangman</h1>
-      
+      <div class="titre">
+        <h1>The Han<span id="corde">g</span>man</h1>
+      </div>
       <img id="image" src="assets/Hangman-0.png" width="256" height="256">
       
       <div class="rowLevel">
@@ -53,7 +55,9 @@
           <h3 class="button" id="z">Z</h3>
         </div>
       </div>
-      <p id="reset">RESET</p>
+      <div id="replay">
+        <p class="level" id="reset">RESET</p>
+      </div>
       <script src="pendu.js" charset="utf-8"></script>
   </body>
 </html>  
